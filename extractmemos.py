@@ -20,10 +20,10 @@
 
 
 words_per_seperator = None # The number of words per line
-                         # in the main content of a memo.
-                         # Feel free to change.
-                         # Change to None if you want the original
-                         # main memo content
+                           # in the main content of a memo.
+                           # Feel free to change to a number greater than 0.
+                           # Change to None if you want the original
+                           # main memo content
 
 import re, zipfile, time, xml.etree.ElementTree as eltree
 
@@ -56,6 +56,11 @@ def parseMemo(memo_file):
 
 
 def seperateStr(s, words_per_seperator, seperator='\n'):
+   if type(words_per_seperator) not in [int, None]:
+      raise TypeError('Expected an integer or None, got {}'.format(words_per_seperator))
+
+   if words_per_seperator < 1:
+      raise ValueError('words_per_seperator cannot be less than 1')
    out = []
    words = s.split(' ')
 

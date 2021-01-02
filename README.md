@@ -33,7 +33,8 @@ The following examples assume your memo files are located on your **Desktop** in
 
 ##### Example 1 (Given a particular memo):
 
-   python /Users/username/Documents/extractMemos.py ./Memos/filename.memo
+	python /Users/username/Documents/extractMemos.py ./Memos/filename.memo
+
 
 ##### Example 2 (Given a directory of memos):
 
