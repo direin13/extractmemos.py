@@ -1,5 +1,5 @@
 # extractmemos.py
-This script extracts text from .memo files created by the default Memo app on Verizon Samsung Galaxy S phones. No root access required. Share a memo via Bluetooth or USB to your PC and run this script against the file.
+This script extracts text from .memo files created by the default Memo app on Verizon Samsung Galaxy S phones. No root access required. Share a memo files to a directory on your pc via Bluetooth or USB and run this script against that directory.
 
 ## About
 I wrote this script to enable storing and reading memos offline on a PC _without_ the need for cloud storage or email transfer. I’ve tested this script for notes created with the default (stock) Samsung Galaxy S6 Memo app that comes preinstalled on Verizon phones. The Memo app I’m referring to is _not_ the "S Memo" app. This script presumably works with other phones that have the same memo app, but I have not tested it.
@@ -14,9 +14,12 @@ These memos, when shared to a PC via Bluetooth or USB, yield an archive with a .
 
 The only requirement is that you have [Python 2 or 3](https://www.python.org/downloads/) installed on your PC. Run this script and add the path to a directory containing the memo file(s) as an argument:
 
-	python extractMemos.py /path/[yourfile.memo]
+	python extractMemos.py [source] [target_directory]
 
 Parsing multiple memo files creates one contiguous output with a message appended to the end of each memo listed.
+
+You may change the number of words per line in the extracted file by changing the variable 'word_per_seperator' in extractmemos.py. It is located near the top of the file.
+If you would like to leave the memo content unchanged, leave the variable as None.
 
 ## Examples
 
@@ -28,23 +31,19 @@ The following examples assume your memo files are located on your **Desktop** in
 
 	cd /Users/username/Desktop
 
-##### Example 1 (View contents of _all_ memo files):
+##### Example 1 (Given a particular memo):
+
+   python /Users/username/Documents/extractMemos.py ./Memos/filename.memo
+
+##### Example 2 (Given a directory of memos):
 
 	python /Users/username/Documents/extractMemos.py ./Memos
 
-##### Example 2 (View the contents of a particular memo):
 
-	python /Users/username/Documents/extractMemos.py ./Memos/filename.memo
+##### Example 3 (Given a directory or memos and a target directory):
 
-##### Example 3 (Output contents of all memos to a text file):
+	python /Users/username/Documents/extractmemos.py ./Memos ./TargetName
 
-	python /Users/username/Documents/extractmemos.py ./Memos > myMemos.txt
-
-##### Example 3 (Output contents of a particular memo to a text file):
-
-	python /Users/username/Documents/extractmemos.py ./Memos/someMemo.memo > myMemo.txt
-
-Note that the single redirect operator `>` (greater-than symbol) **overwrites** any file with the same name! To _add_ output to an existing file use _two_ greater-than symbols `>>` which preserves any data that the file contains by appending new data to the end.
 
 ## Caveats and Warnings
 This script relies on Python's XML Processing Modules and is therefore _not_ secure against maliciously constructed data. I highly recommend using this script to only parse data that you have created on your own device. For more information see:
