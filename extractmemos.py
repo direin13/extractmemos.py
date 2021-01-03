@@ -85,18 +85,21 @@ def extractMemo(memo_file):
    data = parseMemo(memo_file)
 
    #if no title for memo
+   emptyTitle = False
    title_cutoff = 18
    if data['Title'] == '':
+      emptyTitle = True
       if len(data['Content']) > title_cutoff + 1:
          data['Title'] = data['Content'][:title_cutoff]
       else:
          data['Title'] = data['Content'][:]
 
-      data['Title'] = data['Title'] + '~'
-
    #rmv special chars
    data['Title'] = re.sub('[^A-Za-z0-9]+', '', data['Title'])
 
+   if emptyTitle:
+      data['Title'] = data['Title'] + '~'
+      
    return data
 
 
