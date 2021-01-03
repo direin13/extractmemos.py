@@ -25,7 +25,7 @@ words_per_seperator = None # The number of words per line
                            # Change to None if you want the original
                            # main memo content
 
-import re, zipfile, time, xml.etree.ElementTree as eltree
+import re, zipfile, time, xml, xml.etree.ElementTree as eltree
 
 def parseMemo(memo_file):
 
@@ -113,6 +113,7 @@ else:
 filename_count = {}
 
 if source.endswith(".memo") and not os.path.isdir(source):
+   try:
       data = extractMemo(source)
 
       with open('{}.txt'.format(data['Title']), 'w', encoding='utf-8') as txtFile:
@@ -120,6 +121,9 @@ if source.endswith(".memo") and not os.path.isdir(source):
             data['Content'] = seperateStr(data['Content'], words_per_seperator)
          content = 'Title: {}\nCreated: {}\n\n{}'.format(data['Title'], data['Created'], data['Content'])
          txtFile.write(content)
+
+   except xml.etree.ElementTree.ParseError:
+      print('Could not parse {}'.format(source))
 
 else:
    try:
@@ -134,7 +138,13 @@ else:
 
    for file in os.listdir(source):
       if file.endswith('.memo') and not os.path.isdir('{}/{}'.format(source, file)):
-         data = extractMemo(source + '/' + file)
+         data = None
+         try:
+            data = extractMemo(source + '/' + file)
+         except xml.etree.ElementTree.ParseError:
+            print('Could not parse {}'.format(file))
+            continue
+         
 
          filename = data['Title']
          if filename not in filename_count:
