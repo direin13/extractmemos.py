@@ -113,8 +113,6 @@ else:
    source = sys.argv[1]
 
 
-filename_count = {}
-
 if source.endswith(".memo") and not os.path.isdir(source):
    try:
       data = extractMemo(source)
@@ -139,6 +137,7 @@ else:
    except FileExistsError:
       pass
 
+   filename_count = {}
    for file in os.listdir(source):
       if file.endswith('.memo') and not os.path.isdir('{}/{}'.format(source, file)):
          data = None
